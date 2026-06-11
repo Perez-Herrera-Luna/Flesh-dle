@@ -28,6 +28,10 @@ def guess_card(card_list) -> dict:
     return card
 
 
+def is_numerical_comparison(property1: str, property2: str) -> bool:
+    return property1.isdigit() and property2.isdigit()
+
+
 def match_name(name1, name2) -> str:
     if name1 == name2:
         return "✓"
@@ -42,68 +46,94 @@ def match_color(color1, color2) -> str:
     return "X"
 
 
-# Pitch is always interpreted as a string. Cards can have no/null pitch. Such pitch is ""
-# Current comparions are not sufficient because they assume numerical comparison
-# TODO: Need to retool this and every other psuedo numerical comparison
 def match_pitch(pitch1, pitch2) -> str:
     if pitch1 == pitch2:
         return "✓"
-    elif pitch1 < pitch2:
-        return "↑"
-    elif pitch1 > pitch2:
+
+    if is_numerical_comparison(pitch1, pitch2):
+        pitch1, pitch2 = int(pitch1), int(pitch2)
+
+        if pitch1 < pitch2:
+            return "↑"
+
         return "↓"
 
     return "X"
 
 
-# Cards can have no/null cost
 def match_cost(cost1, cost2) -> str:
     if cost1 == cost2:
         return "✓"
-    elif cost1 < cost2:
-        return "↑"
 
-    return "↓"
+    if is_numerical_comparison(cost1, cost2):
+        cost1, cost2 = int(cost1), int(cost2)
+
+        if cost1 < cost2:
+            return "↑"
+
+        return "↓"
+
+    return "X"
 
 
-# Cards can have no/null power
 def match_power(power1, power2) -> str:
     if power1 == power2:
         return "✓"
-    elif power1 < power2:
-        return "↑"
 
-    return "↓"
+    if is_numerical_comparison(power1, power2):
+        power1, power2 = int(power1), int(power2)
+
+        if power1 < power2:
+            return "↑"
+
+        return "↓"
+
+    return "X"
 
 
-# Cards can have no/null defense
 def match_defense(defense1, defense2) -> str:
     if defense1 == defense2:
         return "✓"
-    elif defense1 < defense2:
-        return "↑"
 
-    return "↓"
+    if is_numerical_comparison(defense1, defense2):
+        defense1, defense2 = int(defense1), int(defense2)
+
+        if defense1 < defense2:
+            return "↑"
+
+        return "↓"
+
+    return "X"
 
 
-# Cards can have no/null health
 def match_health(health1, health2) -> str:
     if health1 == health2:
         return "✓"
-    elif health1 < health2:
-        return "↑"
 
-    return "↓"
+    if is_numerical_comparison(health1, health2):
+        health1, health2 = int(health1), int(health2)
+
+        if health1 < health2:
+            return "↑"
+
+        return "↓"
+
+    return "X"
 
 
-# Cards can have no/null intelligence
 def match_intelligence(intelligence1, intelligence2) -> str:
     if intelligence1 == intelligence2:
         return "✓"
-    elif intelligence1 < intelligence2:
-        return "↑"
 
-    return "↓"
+    if is_numerical_comparison(intelligence1, intelligence2):
+        intelligence1, intelligence2 = int(intelligence1), int(intelligence2)
+
+        if intelligence1 < intelligence2:
+            return "↑"
+
+        return "↓"
+
+    return "X"
 
 
 # TODO: Match card types (e.g. Light, Illusionist, Instant, Aura)
