@@ -2,6 +2,9 @@ import json
 import random
 from prettytable import PrettyTable
 
+# TODO: Move these lookup methods to their own module
+# TODO: Need to print card properties of guess as opposed to indicating direction of match
+
 
 # Returns the card that matches card_name and card_color if it exists. Return an empty dict otherwise
 def lookup_card(card_name: str, card_color: str, card_list: list) -> dict:
@@ -136,12 +139,26 @@ def match_intelligence(intelligence1, intelligence2) -> str:
     return "X"
 
 
-# TODO: Match card types (e.g. Light, Illusionist, Instant, Aura)
+def match_types(types1, types2) -> str:
+    if types1 == types2:
+        return "✓"
+
+    types1, types2 = set(types1), set(types2)
+
+    if types1 & types2:
+        return "~"
+
+    return "X"
 
 
 def match_set_id(set_id1, set_id2) -> str:
     if set_id1 == set_id2:
         return "✓"
+
+    set_id1, set_id2 = set(set_id1), set(set_id2)
+
+    if set_id1 & set_id2:
+        return "~"
 
     # TODO: Consider using lookup table to match set codes to names and to order sets by chronological release
     return "X"
@@ -171,6 +188,7 @@ table.field_names = [
     "Defense",
     "Health",
     "Intelligence",
+    "Types",
     "Set",
 ]
 
@@ -195,7 +213,9 @@ while card_guess != random_card:
     intelligence_symbol = match_intelligence(
         card_guess["intelligence"], random_card["intelligence"]
     )
+    types_symbol = match_types(card_guess["types"], random_card["types"])
     set_id_symbol = match_set_id(card_guess["set_id"], random_card["set_id"])
+
     table.add_row(
         [
             name_symbol,
@@ -206,6 +226,7 @@ while card_guess != random_card:
             defense_symbol,
             health_symbol,
             intelligence_symbol,
+            types_symbol,
             set_id_symbol,
         ]
     )
@@ -217,18 +238,3 @@ while card_guess != random_card:
     # Check if guess is correct
     if card_guess == random_card:
         print("**Card correctly guessed**")
-
-
-# card_name = ""
-# card_color = ""
-# while not match_card(lookup_card(card_name, card_color, cards), random_card):
-#     print("Cards don't match")
-#     card_name = input()
-#     card_color = input()
-
-#     while not card_exists(card_name, card_color, cards):
-#         print("No such card exists")
-#         card_name = input()
-#         card_color = input()
-
-# print("Cards match")
