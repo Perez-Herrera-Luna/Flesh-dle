@@ -177,7 +177,7 @@ print(random_card["name"])
 print(random_card["color"])
 
 # Initialize table
-table = PrettyTable(max_width=18)
+table = PrettyTable(max_width=20)
 table.field_names = [
     "Name",
     "Color",
