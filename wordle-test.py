@@ -38,9 +38,9 @@ def is_numerical_comparison(property1: str, property2: str) -> bool:
 
 def match_name(name1: str, name2: str) -> str:
     if name1 == name2:
-        return colored(name1 + " ✓", "green")
+        return name1 + colored("✓", "green")
 
-    return colored(name1 + " X", "red")
+    return name1 + colored("X", "red")
 
 
 def match_color(color1: str, color2: str) -> str:
@@ -177,7 +177,7 @@ print(random_card["name"])
 print(random_card["color"])
 
 # Initialize table
-table = PrettyTable(max_width=20)
+table = PrettyTable(max_width=18)
 table.field_names = [
     "Name",
     "Color",
