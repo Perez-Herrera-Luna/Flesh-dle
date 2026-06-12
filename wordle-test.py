@@ -1,6 +1,7 @@
 import json
 import random
 from prettytable import PrettyTable
+from termcolor import colored
 
 # TODO: Move these lookup methods to their own module
 # TODO: Need to print card properties of guess as opposed to indicating direction of match
@@ -35,133 +36,131 @@ def is_numerical_comparison(property1: str, property2: str) -> bool:
     return property1.isdigit() and property2.isdigit()
 
 
-def match_name(name1, name2) -> str:
+def match_name(name1: str, name2: str) -> str:
     if name1 == name2:
-        return "✓"
+        return colored("✓", "green")
 
-    return "X"
+    return colored("X", "red")
 
 
-def match_color(color1, color2) -> str:
+def match_color(color1: str, color2: str) -> str:
     if color1 == color2:
-        return "✓"
+        return colored("✓", "green")
 
-    return "X"
+    return colored("X", "red")
 
 
-def match_pitch(pitch1, pitch2) -> str:
+def match_pitch(pitch1: str, pitch2: str) -> str:
     if pitch1 == pitch2:
-        return "✓"
+        return colored("✓", "green")
 
     if is_numerical_comparison(pitch1, pitch2):
-        pitch1, pitch2 = int(pitch1), int(pitch2)
+        numeric_pitch1, numeric_pitch2 = int(pitch1), int(pitch2)
 
-        if pitch1 < pitch2:
-            return "↑"
+        if numeric_pitch1 < numeric_pitch2:
+            return colored("↑", "yellow")
 
-        return "↓"
+        return colored("↓", "yellow")
 
-    return "X"
+    return colored("X", "red")
 
 
-def match_cost(cost1, cost2) -> str:
+def match_cost(cost1: str, cost2: str) -> str:
     if cost1 == cost2:
-        return "✓"
+        return colored("✓", "green")
 
     if is_numerical_comparison(cost1, cost2):
-        cost1, cost2 = int(cost1), int(cost2)
+        numeric_cost1, numeric_cost2 = int(cost1), int(cost2)
 
-        if cost1 < cost2:
-            return "↑"
+        if numeric_cost1 < numeric_cost2:
+            return colored("↑", "yellow")
 
-        return "↓"
+        return colored("↓", "yellow")
 
-    return "X"
+    return colored("X", "red")
 
 
-def match_power(power1, power2) -> str:
+def match_power(power1: str, power2: str) -> str:
     if power1 == power2:
-        return "✓"
+        return colored("✓", "green")
 
     if is_numerical_comparison(power1, power2):
-        power1, power2 = int(power1), int(power2)
+        numeric_power1, numeric_power2 = int(power1), int(power2)
 
-        if power1 < power2:
-            return "↑"
+        if numeric_power1 < numeric_power2:
+            return colored("↑", "yellow")
 
-        return "↓"
+        return colored("↓", "yellow")
 
-    return "X"
+    return colored("X", "red")
 
 
-def match_defense(defense1, defense2) -> str:
+def match_defense(defense1: str, defense2: str) -> str:
     if defense1 == defense2:
-        return "✓"
+        return colored("✓", "green")
 
     if is_numerical_comparison(defense1, defense2):
-        defense1, defense2 = int(defense1), int(defense2)
+        numeric_defense1, numeric_defense2 = int(defense1), int(defense2)
 
-        if defense1 < defense2:
-            return "↑"
+        if numeric_defense1 < numeric_defense2:
+            return colored("↑", "yellow")
 
-        return "↓"
+        return colored("↓", "yellow")
 
-    return "X"
+    return colored("X", "red")
 
 
-def match_health(health1, health2) -> str:
+def match_health(health1: str, health2: str) -> str:
     if health1 == health2:
-        return "✓"
+        return colored("✓", "green")
 
     if is_numerical_comparison(health1, health2):
-        health1, health2 = int(health1), int(health2)
+        numeric_health1, numeric_health2 = int(health1), int(health2)
 
-        if health1 < health2:
-            return "↑"
+        if numeric_health1 < numeric_health2:
+            return colored("↑", "yellow")
 
-        return "↓"
+        return colored("↓", "yellow")
 
-    return "X"
+    return colored("X", "red")
 
 
-def match_intelligence(intelligence1, intelligence2) -> str:
+def match_intelligence(intelligence1: str, intelligence2: str) -> str:
     if intelligence1 == intelligence2:
-        return "✓"
+        return colored("✓", "green")
 
     if is_numerical_comparison(intelligence1, intelligence2):
-        intelligence1, intelligence2 = int(intelligence1), int(intelligence2)
+        numeric_intelligence1, numeric_intelligence2 = int(intelligence1), int(
+            intelligence2
+        )
 
-        if intelligence1 < intelligence2:
-            return "↑"
+        if numeric_intelligence1 < numeric_intelligence2:
+            return colored("↑", "yellow")
 
-        return "↓"
+        return colored("↓", "yellow")
 
-    return "X"
+    return colored("X", "red")
 
 
-def match_types(types1, types2) -> str:
+def match_types(types1: list[str], types2: list[str]) -> str:
     if types1 == types2:
-        return "✓"
+        return colored("✓", "green")
 
-    types1, types2 = set(types1), set(types2)
+    if set(types1) & set(types2):
+        return colored("~", "yellow")
 
-    if types1 & types2:
-        return "~"
-
-    return "X"
+    return colored("X", "red")
 
 
-def match_set_id(set_id1, set_id2) -> str:
+def match_set_id(set_id1: list[str], set_id2: list[str]) -> str:
     if set_id1 == set_id2:
-        return "✓"
+        return colored("✓", "green")
 
-    set_id1, set_id2 = set(set_id1), set(set_id2)
-
-    if set_id1 & set_id2:
-        return "~"
+    if set(set_id1) & set(set_id2):
+        return colored("~", "yellow")
 
     # TODO: Consider using lookup table to match set codes to names and to order sets by chronological release
-    return "X"
+    return colored("X", "red")
 
 
 # Read in cards
