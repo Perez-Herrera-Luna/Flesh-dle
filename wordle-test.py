@@ -24,7 +24,7 @@ def guess_card(card_list) -> dict:
 
     card = lookup_card(card_name, card_color, card_list)
     while card == dict():
-        print("No such card exists")
+        print(colored("No such card exists", "yellow"))
         card_name = input()
         card_color = input()
         card = lookup_card(card_name, card_color, card_list)
@@ -38,9 +38,9 @@ def is_numerical_comparison(property1: str, property2: str) -> bool:
 
 def match_name(name1: str, name2: str) -> str:
     if name1 == name2:
-        return colored("✓", "green")
+        return colored(name1 + " ✓", "green")
 
-    return colored("X", "red")
+    return colored(name1 + " X", "red")
 
 
 def match_color(color1: str, color2: str) -> str:
@@ -144,23 +144,23 @@ def match_intelligence(intelligence1: str, intelligence2: str) -> str:
 
 def match_types(types1: list[str], types2: list[str]) -> str:
     if types1 == types2:
-        return colored("✓", "green")
+        return str(types1) + colored("✓", "green")
 
     if set(types1) & set(types2):
-        return colored("~", "yellow")
+        return str(types1) + colored("~", "yellow")
 
-    return colored("X", "red")
+    return str(types1) + colored("X", "red")
 
 
 def match_set_id(set_id1: list[str], set_id2: list[str]) -> str:
     if set_id1 == set_id2:
-        return colored("✓", "green")
+        return str(set_id1) + colored("✓", "green")
 
     if set(set_id1) & set(set_id2):
-        return colored("~", "yellow")
+        return str(set_id1) + colored(" ~", "yellow")
 
     # TODO: Consider using lookup table to match set codes to names and to order sets by chronological release
-    return colored("X", "red")
+    return str(set_id1) + colored("X", "red")
 
 
 # Read in cards
@@ -177,7 +177,7 @@ print(random_card["name"])
 print(random_card["color"])
 
 # Initialize table
-table = PrettyTable()
+table = PrettyTable(max_width=20)
 table.field_names = [
     "Name",
     "Color",
@@ -195,7 +195,7 @@ table.field_names = [
 card_guess = guess_card(cards)
 while card_guess != random_card:
     # Guess was incorrect
-    print("Incorrect guess")
+    print(colored("Incorrect guess", "red"))
 
     # Reveal card info
     name_symbol = match_name(card_guess["name"], random_card["name"])
@@ -232,4 +232,4 @@ while card_guess != random_card:
 
     # Check if guess is correct
     if card_guess == random_card:
-        print("**Card correctly guessed**")
+        print(colored("Card correctly guessed", "green"))
