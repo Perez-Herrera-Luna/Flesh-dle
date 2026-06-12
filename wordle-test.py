@@ -45,89 +45,89 @@ def match_name(name1: str, name2: str) -> str:
 
 def match_color(color1: str, color2: str) -> str:
     if color1 == color2:
-        return colored("✓", "green")
+        return colored(color1 + " ✓", "green")
 
-    return colored("X", "red")
+    return colored(color1 + " X", "red")
 
 
 def match_pitch(pitch1: str, pitch2: str) -> str:
     if pitch1 == pitch2:
-        return colored("✓", "green")
+        return colored(pitch1 + "✓", "green")
 
     if is_numerical_comparison(pitch1, pitch2):
         numeric_pitch1, numeric_pitch2 = int(pitch1), int(pitch2)
 
         if numeric_pitch1 < numeric_pitch2:
-            return colored("↑", "yellow")
+            return colored(pitch1 + "↑", "yellow")
 
-        return colored("↓", "yellow")
+        return colored(pitch1 + "↓", "yellow")
 
-    return colored("X", "red")
+    return colored(pitch1 + "X", "red")
 
 
 def match_cost(cost1: str, cost2: str) -> str:
     if cost1 == cost2:
-        return colored("✓", "green")
+        return colored(cost1 + "✓", "green")
 
     if is_numerical_comparison(cost1, cost2):
         numeric_cost1, numeric_cost2 = int(cost1), int(cost2)
 
         if numeric_cost1 < numeric_cost2:
-            return colored("↑", "yellow")
+            return colored(cost1 + "↑", "yellow")
 
-        return colored("↓", "yellow")
+        return colored(cost1 + "↓", "yellow")
 
-    return colored("X", "red")
+    return colored(cost1 + "X", "red")
 
 
 def match_power(power1: str, power2: str) -> str:
     if power1 == power2:
-        return colored("✓", "green")
+        return colored(power1 + "✓", "green")
 
     if is_numerical_comparison(power1, power2):
         numeric_power1, numeric_power2 = int(power1), int(power2)
 
         if numeric_power1 < numeric_power2:
-            return colored("↑", "yellow")
+            return colored(power1 + "↑", "yellow")
 
-        return colored("↓", "yellow")
+        return colored(power1 + "↓", "yellow")
 
-    return colored("X", "red")
+    return colored(power1 + "X", "red")
 
 
 def match_defense(defense1: str, defense2: str) -> str:
     if defense1 == defense2:
-        return colored("✓", "green")
+        return colored(defense1 + "✓", "green")
 
     if is_numerical_comparison(defense1, defense2):
         numeric_defense1, numeric_defense2 = int(defense1), int(defense2)
 
         if numeric_defense1 < numeric_defense2:
-            return colored("↑", "yellow")
+            return colored(defense1 + "↑", "yellow")
 
-        return colored("↓", "yellow")
+        return colored(defense1 + "↓", "yellow")
 
-    return colored("X", "red")
+    return colored(defense1 + "X", "red")
 
 
 def match_health(health1: str, health2: str) -> str:
     if health1 == health2:
-        return colored("✓", "green")
+        return colored(health1 + "✓", "green")
 
     if is_numerical_comparison(health1, health2):
         numeric_health1, numeric_health2 = int(health1), int(health2)
 
         if numeric_health1 < numeric_health2:
-            return colored("↑", "yellow")
+            return colored(health1 + "↑", "yellow")
 
-        return colored("↓", "yellow")
+        return colored(health1 + "↓", "yellow")
 
-    return colored("X", "red")
+    return colored(health1 + "X", "red")
 
 
 def match_intelligence(intelligence1: str, intelligence2: str) -> str:
     if intelligence1 == intelligence2:
-        return colored("✓", "green")
+        return colored(intelligence1 + "✓", "green")
 
     if is_numerical_comparison(intelligence1, intelligence2):
         numeric_intelligence1, numeric_intelligence2 = int(intelligence1), int(
@@ -135,11 +135,11 @@ def match_intelligence(intelligence1: str, intelligence2: str) -> str:
         )
 
         if numeric_intelligence1 < numeric_intelligence2:
-            return colored("↑", "yellow")
+            return colored(intelligence1 + "↑", "yellow")
 
-        return colored("↓", "yellow")
+        return colored(intelligence1 + "↓", "yellow")
 
-    return colored("X", "red")
+    return colored(intelligence1 + "X", "red")
 
 
 def match_types(types1: list[str], types2: list[str]) -> str:
@@ -201,11 +201,7 @@ while card_guess != random_card:
     name_symbol = match_name(card_guess["name"], random_card["name"])
     color_symbol = match_color(card_guess["color"], random_card["color"])
     pitch_symbol = match_pitch(card_guess["pitch"], random_card["pitch"])
-    print(card_guess["pitch"] + " : " + random_card["pitch"])
-    print(str(type(card_guess["pitch"])) + " : " + str(type(random_card["pitch"])))
     cost_symbol = match_cost(card_guess["cost"], random_card["cost"])
-    print(card_guess["cost"] + " : " + random_card["cost"])
-    print(str(type(card_guess["pitch"])) + " : " + str(type(random_card["pitch"])))
     power_symbol = match_power(card_guess["power"], random_card["power"])
     defense_symbol = match_defense(card_guess["defense"], random_card["defense"])
     health_symbol = match_health(card_guess["health"], random_card["health"])
