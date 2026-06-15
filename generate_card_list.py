@@ -52,6 +52,8 @@ for card in cards:
     card_dict.update({"intelligence": card["intelligence"]})
     card_dict.update({"types": card["types"]})
     card_dict.update({"set_id": set([card["set_id"]])})
+    card_dict.update({"card_keywords": card["card_keywords"]})
+    card_dict.update({"rarity": card["rarity"]})
 
     card_list.append(card_dict)
 
