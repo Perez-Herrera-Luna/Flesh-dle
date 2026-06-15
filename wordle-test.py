@@ -5,7 +5,6 @@ from prettytable import PrettyTable
 from termcolor import colored
 
 # TODO: Move these lookup methods to their own module
-# TODO: Need to print card properties of guess as opposed to indicating direction of match
 
 
 # Returns the card that matches card_name and card_color if it exists. Return an empty dict otherwise
