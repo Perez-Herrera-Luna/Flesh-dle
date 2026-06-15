@@ -1,5 +1,6 @@
 import json
 import random
+import re
 from prettytable import PrettyTable
 from termcolor import colored
 
@@ -143,7 +144,7 @@ def match_intelligence(intelligence1: str, intelligence2: str) -> str:
 
 
 def match_types(types1: list[str], types2: list[str]) -> str:
-    if types1 == types2:
+    if set(types1) == set(types2):
         return str(types1) + colored("✓", "green")
 
     if set(types1) & set(types2):
@@ -153,7 +154,7 @@ def match_types(types1: list[str], types2: list[str]) -> str:
 
 
 def match_set_id(set_id1: list[str], set_id2: list[str]) -> str:
-    if set_id1 == set_id2:
+    if set(set_id1) == set(set_id2):
         return str(set_id1) + colored("✓", "green")
 
     if set(set_id1) & set(set_id2):
@@ -161,6 +162,34 @@ def match_set_id(set_id1: list[str], set_id2: list[str]) -> str:
 
     # TODO: Consider using lookup table to match set codes to names and to order sets by chronological release
     return str(set_id1) + colored("X", "red")
+
+
+def match_card_keywords(card_keywords1: list[str], card_keywords2: list[str]) -> str:
+    # Remove numbers and trailing whitespace
+    clean_keywords1 = [normalize_keyword(keyword) for keyword in card_keywords1]
+    clean_keywords2 = [normalize_keyword(keyword) for keyword in card_keywords2]
+
+    if set(clean_keywords1) == set(clean_keywords2):
+        return str(card_keywords1) + colored("✓", "green")
+
+    if set(clean_keywords1) & set(clean_keywords2):
+        return str(card_keywords1) + colored("~", "yellow")
+
+    return str(card_keywords1) + colored("X", "red")
+
+
+def match_rarity(rarity1: list[str], rarity2: list[str]) -> str:
+    if set(rarity1) == set(rarity2):
+        return str(rarity1) + colored("✓", "green")
+
+    if set(rarity1) & set(rarity2):
+        return str(rarity1) + colored("~", "yellow")
+
+    return str(rarity1) + colored("X", "red")
+
+
+def normalize_keyword(keyword: str) -> str:
+    return re.sub(r"\s+\d+$", "", keyword)
 
 
 # Read in cards
@@ -177,7 +206,7 @@ print(random_card["name"])
 print(random_card["color"])
 
 # Initialize table
-table = PrettyTable(max_width=20)
+table = PrettyTable(max_width=10)
 table.field_names = [
     "Name",
     "Color",
@@ -189,6 +218,8 @@ table.field_names = [
     "Intelligence",
     "Types",
     "Set",
+    "Keywords",
+    "Rarity",
 ]
 
 # Guess cards
@@ -210,6 +241,10 @@ while card_guess != random_card:
     )
     types_symbol = match_types(card_guess["types"], random_card["types"])
     set_id_symbol = match_set_id(card_guess["set_id"], random_card["set_id"])
+    card_keywords_symbol = match_card_keywords(
+        card_guess["card_keywords"], random_card["card_keywords"]
+    )
+    rarity_symbol = match_rarity(card_guess["rarity"], random_card["rarity"])
 
     table.add_row(
         [
@@ -223,6 +258,8 @@ while card_guess != random_card:
             intelligence_symbol,
             types_symbol,
             set_id_symbol,
+            card_keywords_symbol,
+            rarity_symbol,
         ]
     )
     print(table)
