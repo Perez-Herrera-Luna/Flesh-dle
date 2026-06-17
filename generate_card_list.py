@@ -47,6 +47,11 @@ for card in card_list:
     card.update({"set_id": list(card["set_id"])})
     card.update({"rarity": list(card["rarity"])})
 
+
+# Sort cards by name and color
+card_list.sort(key=lambda card: card["name"] + " (" + card["color"] + ")")
+
+
 # Write JSON file with cards
 with open("cards.json", mode="w", encoding="utf-8") as f:
     json.dump(card_list, f, indent=2)
